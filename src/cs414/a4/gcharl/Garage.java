@@ -56,4 +56,16 @@ public class Garage {
 		return isAccepting;
 	}
 
+	public void increaseCurrentOccupancyByOne() {
+		garageDescription.increaseCurrentOccupancyByOne();		
+	}
+
+	public double getParkingRate() {
+		return garageDescription.getCurrentParkingRate();
+	}
+
+	public void decreaseCurrentOccupancyByOne() {
+		garageDescription.decreaseCurrentOccupancyByOne();
+	}
+
 }

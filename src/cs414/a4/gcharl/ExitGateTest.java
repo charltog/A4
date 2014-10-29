@@ -8,23 +8,27 @@ public class ExitGateTest {
 
 	@Test
 	public void testOpenExitGate() {
+		Garage g1 = new Garage(1);
+		g1.getExitGate().openExitGate();
+		assertEquals(g1.getExitGate().getStatus(), gateStatus.Open);	
+	}
 		
-	
+	@Test
+	public void testCloseExitGate() {
+		Garage g2 = new Garage(2);
+		g2.getExitGate().closeExitGate();
+		assertEquals(g2.getExitGate().getStatus(), gateStatus.Closed);
 	}
 	
-	
-	
 	@Test
-	public void test() {
-		fail("Not yet implemented");
-	}
-	@Test
-	public void test() {
-		fail("Not yet implemented");
-	}
-	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testRequestExit() {
+		Garage g3 = new Garage(3);
+		for (int i=0; i<5; i++) {
+			g3.increaseCurrentOccupancyByOne();				// should have 5 now
+		}
+		Ticket t3 = new Ticket(g3.getDateTime(), 3, g3);
+		g3.getExitGate().requestExit(t3, FormOfPayment.CreditCard);
+		assertEquals(t3.isValid(), false);
 	}
 
 }

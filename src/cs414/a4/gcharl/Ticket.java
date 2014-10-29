@@ -7,11 +7,13 @@ public class Ticket {
 	private Date entryTime = null;
 	private int Id = -1;
 	private Garage garage = null;
+	private boolean valid = false;
 
 	public Ticket(Date startTime, int ticketCount, Garage g1) {
 		this.entryTime = startTime;
 		this.Id = ticketCount;
 		this.garage = g1;
+		this.valid = true;
 	}
 
 	public Ticket() {
@@ -23,11 +25,28 @@ public class Ticket {
 //			return true;
 //		}
 		//if (garage.getExitGate().lookupSaleByTicketId(this.Id).exists()) {
-		if (this.garage == null) {
+		//if (this.garage == null) {
+		if (this.valid == false) {
 			return false;
 		} else {
 			return true;
 		}
+	}
+
+	public void retire() {
+		setIsValid(false);		
+	}
+
+	private void setIsValid(boolean b) {
+		this.valid  = b;		
+	}
+
+	public Garage getGarage() {
+		return garage;
+	}
+
+	public Date getEntryTime() {
+		return entryTime;
 	}
 
 	public int getId() {

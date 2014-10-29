@@ -53,8 +53,10 @@ public class EntryGate {
 			startTime = this.garage.getDateTime();
 			t1 = new Ticket(startTime, this.ticketCount, this.garage);	
 			this.incrementTicketCount();
+			this.garage.increaseCurrentOccupancyByOne();
 		}
 		return t1;
 	}
+	
 
 }

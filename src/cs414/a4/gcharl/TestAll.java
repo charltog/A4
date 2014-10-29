@@ -5,7 +5,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ EntryGateTest.class })
+@SuiteClasses({ EntryGateTest.class, ExitGateTest.class })
 public class TestAll {
 
 }

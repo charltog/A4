@@ -21,7 +21,7 @@ public class Sale {
 	}
 
 	private double calculateTotal(Date entryTime, Date exitTime, double parkingRate) {
-		long timeParked = exitTime.getTime() - entryTime.getTime();
+		double timeParked = exitTime.getTime() - entryTime.getTime();
 		double subtotal = (timeParked*3600000)*parkingRate;
 		return subtotal;
 	}

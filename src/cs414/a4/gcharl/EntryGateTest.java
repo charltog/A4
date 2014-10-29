@@ -25,5 +25,13 @@ public class EntryGateTest {
 		g3.getEntryGate().incrementTicketCount();
 		assertEquals(g3.getEntryGate().getTicketCount(), 2);
 	}
+	@Test
+	public void testRequestEntry() {
+		Garage g4 = new Garage(4);
+		Ticket t4 = g4.getEntryGate().requestEntry();
+		assertTrue(t4.isValid());
+		
+	}
+
 
 }

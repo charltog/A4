@@ -16,6 +16,19 @@ public class Garage {
 		garageDescription = new GarageDescription();
 	}
 
+	public boolean equals(Object o) {
+		boolean result = false;
+		if (this.Id == ((Garage)o).getId()) {
+			result = true;
+		} else {
+			result = false;
+		}
+		return result;
+	}
+	public int getId() {
+		return this.Id;
+	}
+
 	private EntryGate createEntryGate() {
 		return createEntryGate(this.Id);
 	}

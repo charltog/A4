@@ -14,10 +14,14 @@ public class Payment {
 		return processPayment(this.total, this.FOP);
 	}
 
-	private boolean processPayment(double total2, FormOfPayment FOP2) {
+	private boolean processPayment(double total2, FormOfPayment FOP) {
 		// charge, debit, credit accounts as needed
-		// 
-		return true;
+		//
+		boolean result = false;
+		if ((FOP == FormOfPayment.CreditCard) || (FOP == FormOfPayment.Cash)) {
+			return true;
+		}
+		return result;
 	}
 
 }

@@ -41,6 +41,7 @@ public class ExitGate {
 			//Ticket not valid, charge default fee and allow exit
 		} else {
 			Sale s1 = createSale(t1);
+			Sales.add(s1);
 			Payment p1 = createPayment(s1.getTotal(), FOP);
 			confirmTotal();
 			p1.processPayment();

@@ -1,6 +1,7 @@
 package cs414.a4.gcharl;
 
 import java.util.Date;
+import java.util.HashSet;
 
 public class EntryGate {
 
@@ -8,6 +9,7 @@ public class EntryGate {
 	private gateStatus status;
 	private Garage garage;
 	private int ticketCount;
+	public HashSet<Ticket> tickets = new HashSet<Ticket>();
 
 	public EntryGate(int Id, int initialTicketCount, Garage g1) {
 		this.Id = Id;
@@ -54,6 +56,7 @@ public class EntryGate {
 			t1 = new Ticket(startTime, this.ticketCount, this.garage);	
 			this.incrementTicketCount();
 			this.garage.increaseCurrentOccupancyByOne();
+			tickets.add(t1);
 		}
 		return t1;
 	}

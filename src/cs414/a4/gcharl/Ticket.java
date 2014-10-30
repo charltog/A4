@@ -19,6 +19,11 @@ public class Ticket {
 	public Ticket() {
 		//Default
 	}
+	
+	public String toString() {
+		String ticketString = ""+ this.Id;
+		return ticketString;
+	}
 
 	public boolean isValid() {
 //		if (garage.getDateTime().after(entryTime) ) {

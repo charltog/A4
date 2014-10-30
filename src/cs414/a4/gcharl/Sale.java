@@ -5,6 +5,8 @@ import java.util.Date;
 public class Sale {
 	
 	private Ticket ticket;
+	
+
 	private double total;
 
 	public Sale(Ticket t1) {
@@ -26,4 +28,7 @@ public class Sale {
 		return subtotal;
 	}
 
+	public Ticket getTicket() {
+		return ticket;
+	}
 }

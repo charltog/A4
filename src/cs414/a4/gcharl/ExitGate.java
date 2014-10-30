@@ -51,10 +51,14 @@ public class ExitGate {
 	}
 
 	private Payment createPayment(double total, FormOfPayment FOP) {
+		SystemLogEvent event = new SystemLogEvent(this.garage, "Payment by " + FOP + " for " + total + " Created", ExitGate.class.getName(), this.garage.getDateTime());
+		this.garage.systemLog.addLogEvent(event);
 		return new Payment(total, FOP);
 	}
 
 	private Sale createSale(Ticket t1) {
+		SystemLogEvent event = new SystemLogEvent(this.garage, "Sale for Ticket " + t1 + " Created", ExitGate.class.getName(), this.garage.getDateTime());
+		this.garage.systemLog.addLogEvent(event);
 		return new Sale(t1);		
 	}
 

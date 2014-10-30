@@ -13,7 +13,7 @@ public class Sale {
 		Date exitTime = this.ticket.getGarage().getDateTime();
 		double parkingRate = this.ticket.getGarage().getParkingRate();		
 		this.total = calculateTotal(entryTime, exitTime, parkingRate);
-
+		
 	}
 
 	public double getTotal() {		

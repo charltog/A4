@@ -8,12 +8,18 @@ public class Garage {
 	private EntryGate entryGate;
 	private ExitGate exitGate;
 	private GarageDescription garageDescription;
+	public SystemLog systemLog;
 	
 	public Garage(int id) {
+		systemLog = new SystemLog();
 		this.Id = id;
 		entryGate = createEntryGate();
 		exitGate = createExitGate();
-		garageDescription = new GarageDescription();
+		garageDescription = new GarageDescription();		
+	}
+
+	public SystemLog getSystemLog() {
+		return systemLog;
 	}
 
 	public boolean equals(Object o) {
@@ -35,7 +41,9 @@ public class Garage {
 
 	private EntryGate createEntryGate(int id) {
 		int initialTicketCount = 1;
-		return new EntryGate(id, initialTicketCount, this);		
+		SystemLogEvent event = new SystemLogEvent(this, "Entry Gate Created", EntryGate.class.getName(), this.getDateTime());
+		systemLog.addLogEvent(event);		
+		return new EntryGate(id, initialTicketCount, this);
 	}
 
 	private ExitGate createExitGate() {
@@ -43,6 +51,8 @@ public class Garage {
 	}
 
 	private ExitGate createExitGate(int id) {
+		SystemLogEvent event = new SystemLogEvent(this, "Exit Gate Created", ExitGate.class.getName(), this.getDateTime());
+		systemLog.addLogEvent(event);
 		return new ExitGate(id, this);
 	}
 	
@@ -70,6 +80,8 @@ public class Garage {
 	}
 
 	public void increaseCurrentOccupancyByOne() {
+		SystemLogEvent event = new SystemLogEvent(this, "Increased Occupancy by one", Garage.class.getName(), this.getDateTime());
+		systemLog.addLogEvent(event);
 		garageDescription.increaseCurrentOccupancyByOne();		
 	}
 
@@ -78,6 +90,8 @@ public class Garage {
 	}
 
 	public void decreaseCurrentOccupancyByOne() {
+		SystemLogEvent event = new SystemLogEvent(this, "Decreased Occupancy by one", EntryGate.class.getName(), this.getDateTime());
+		systemLog.addLogEvent(event);
 		garageDescription.decreaseCurrentOccupancyByOne();
 	}
 

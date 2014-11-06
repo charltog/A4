@@ -1,6 +1,7 @@
 package cs414.a4.gcharl;
 
 import java.util.Date;
+import java.math.*;
 
 public class Sale {
 	
@@ -8,6 +9,7 @@ public class Sale {
 	
 
 	private double total;
+	public int roundedTotal=0;
 
 	public Sale(Ticket t1) {
 		this.ticket = t1;
@@ -15,7 +17,7 @@ public class Sale {
 		Date exitTime = this.ticket.getGarage().getDateTime();
 		double parkingRate = this.ticket.getGarage().getParkingRate();		
 		this.total = calculateTotal(entryTime, exitTime, parkingRate);
-		
+		this.roundedTotal = (int)(Math.floor(total) +1);
 	}
 
 	public double getTotal() {		
@@ -30,5 +32,9 @@ public class Sale {
 
 	public Ticket getTicket() {
 		return ticket;
+	}
+
+	public int getRoundedTotal() {
+		return roundedTotal;
 	}
 }

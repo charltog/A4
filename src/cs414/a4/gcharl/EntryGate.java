@@ -46,6 +46,25 @@ public class EntryGate {
 		return this.garage;
 	}
 
+	public Ticket requestTicket()	{
+		Ticket t1 = new Ticket();
+		Date startTime;
+		if(!this.garage.isGarageAcceptingVehicles()) {
+			//Deny Entry
+			t1 = null;
+		} else {			
+			startTime = this.garage.getDateTime();
+			t1 = new Ticket(startTime, this.ticketCount, this.garage);	
+			this.incrementTicketCount();
+			tickets.add(t1);
+		}
+		return t1;		
+	}
+	
+	public void enterGarage()	{
+		this.garage.increaseCurrentOccupancyByOne();
+	}
+	
 	public Ticket requestEntry() {
 		Ticket t1 = new Ticket();
 		Date startTime;

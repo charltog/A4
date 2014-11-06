@@ -35,12 +35,21 @@ public class ExitGate {
 	private void setStatus(gateStatus status) {
 		this.status = status;
 	}
+	
+	public void exitGarage()	{
+		this.garage.decreaseCurrentOccupancyByOne();
+	}
 
-	public void requestExit(Ticket t1, FormOfPayment FOP) {
-		if (!t1.isValid()) {
+	public Sale requestExit(Ticket t1, FormOfPayment FOP) {
+		Sale s1 = null;
+		if (!t1.isValid()) {			
 			//Ticket not valid, charge default fee and allow exit
+		} else if (FOP == null) {
+			// need a valid FOP 
+			s1 = createSale(t1);
+			Sales.add(s1);			
 		} else {
-			Sale s1 = createSale(t1);
+			s1 = createSale(t1);
 			Sales.add(s1);
 			Payment p1 = createPayment(s1.getTotal(), FOP);
 			confirmTotal();
@@ -48,6 +57,7 @@ public class ExitGate {
 			this.garage.decreaseCurrentOccupancyByOne();
 			t1.retire();
 		}
+		return s1;
 		
 	}
 

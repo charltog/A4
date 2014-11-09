@@ -40,22 +40,22 @@ public class ExitGate {
 		this.garage.decreaseCurrentOccupancyByOne();
 	}
 
-	public Sale requestExit(Ticket t1, FormOfPayment FOP) {
+	public Sale requestExit(Ticket t1) {
 		Sale s1 = null;
 		if (!t1.isValid()) {			
 			//Ticket not valid, charge default fee and allow exit
-		} else if (FOP == null) {
-			// need a valid FOP 
-			s1 = createSale(t1);
-			Sales.add(s1);			
+//		} else if (FOP == null) {
+//			// need a valid FOP 
+//			s1 = createSale(t1);
+//			Sales.add(s1);			
 		} else {
 			s1 = createSale(t1);
 			Sales.add(s1);
-			Payment p1 = createPayment(s1.getTotal(), FOP);
-			confirmTotal();
-			p1.processPayment();
-			this.garage.decreaseCurrentOccupancyByOne();
-			t1.retire();
+			//Payment p1 = createPayment(s1.getTotal(), FOP);
+			//confirmTotal();
+			//p1.processPayment();
+			//this.garage.decreaseCurrentOccupancyByOne();
+			//t1.retire();
 		}
 		return s1;
 		
@@ -76,6 +76,26 @@ public class ExitGate {
 	private void confirmTotal() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public Sale findSaleByTicketId(Ticket t1) {
+		Sale s1 = null;
+		for (Sale s : garage.getExitGate().Sales) {
+			if (s.getTicket() == t1) {
+				s1 = s;
+			}
+		}
+		return s1;
+	}
+
+	public boolean makePayment(Sale s1, int payAmt, FormOfPayment FOP) {
+		boolean result = false;
+		if (FOP==FormOfPayment.Cash || FOP == FormOfPayment.CreditCard) {
+			int newTotal = s1.getRoundedTotal() - payAmt;
+			s1.setTotal((double)newTotal);
+			result = true;
+		}
+		return result;
 	}
 
 

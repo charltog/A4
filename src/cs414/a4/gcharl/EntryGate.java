@@ -79,6 +79,17 @@ public class EntryGate {
 		}
 		return t1;
 	}
+
+	public Ticket findTicketByID(String testString) {
+		Ticket t1 = null;
+		for (Ticket t : garage.getEntryGate().tickets) {
+			if (t.toString().equals(testString)) {
+				t1 = t;
+			}
+		}	
+	
+		return t1;
+	}
 	
 
 }

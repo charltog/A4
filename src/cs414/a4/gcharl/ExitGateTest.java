@@ -26,9 +26,10 @@ public class ExitGateTest {
 		for (int i=0; i<5; i++) {
 			g3.increaseCurrentOccupancyByOne();				// should have 5 now
 		}
-		Ticket t3 = new Ticket(g3.getDateTime(), 3, g3);
-		g3.getExitGate().requestExit(t3, FormOfPayment.CreditCard);
-		assertEquals(t3.isValid(), false);
+		Ticket t3 = new Ticket(g3.getDateTime(), 3, g3);		
+		Sale s3 = g3.getExitGate().requestExit(t3);
+		//assertEquals(t3.isValid(), false);
+		assertTrue(g3.getExitGate().getSales().contains(s3));
 	}
 
 }

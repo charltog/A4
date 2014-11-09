@@ -35,6 +35,8 @@ public class ParkingGarageGUI extends JFrame {
 	private FormOfPayment FOP;
 	
 	private Garage garage = new Garage(101);
+	private int totalAmt = 0;
+	private int payAmt;
 	private JTextField paymentAmount;
 	private GridBagConstraints gbc_paymentAmount;
 
@@ -224,20 +226,16 @@ public class ParkingGarageGUI extends JFrame {
 		JButton btnGetTotal = new JButton("Get Total");
 		btnGetTotal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Ticket t1 = new Ticket();
+				
 				String testString = exitTicketNum.getText();
-				if (testString.equals("")) {
-					//
-				} else {
-					for (Ticket t : garage.getEntryGate().tickets) {
-						if (t.toString().equals(testString)) {
-							t1 = t;
-						}
-					}	
-					//Sale s1 = garage.getExitGate().requestExit(t1, FOP);
-					Sale s1 = new Sale(t1);
+				Ticket t1 = garage.getEntryGate().findTicketByID(testString);
+				if (t1 == null) {
+					totalText.setText("Bad ticket #");
+				} else {				
+					//Sale s1 = new Sale(t1);
+					Sale s1 = garage.getExitGate().requestExit(t1);
 					if (s1.getTotal() != 0.0 ) {
-						totalText.setText("" + s1.roundedTotal + ".00");	
+						totalText.setText("" + s1.roundedTotal + ".00");
 					} else {
 						totalText.setText("0.00");
 					}
@@ -322,6 +320,20 @@ public class ParkingGarageGUI extends JFrame {
 		});
 		
 		JButton btnMakePayment = new JButton("Make Payment");
+		btnMakePayment.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String testString = exitTicketNum.getText();
+				Ticket t1 = garage.getEntryGate().findTicketByID(testString);
+				Sale s1 = garage.getExitGate().findSaleByTicketId(t1);
+				
+				if (garage.getExitGate().makePayment(s1, payAmt, FOP)) {
+					totalText.setText("");
+					paymentAmount.setText("");
+				} else {
+					paymentAmount.setText("Payment Failed");
+				}
+			}
+		});
 		GridBagConstraints gbc_btnMakePayment = new GridBagConstraints();
 		gbc_btnMakePayment.insets = new Insets(0, 0, 0, 5);
 		gbc_btnMakePayment.gridx = 1;

@@ -12,12 +12,22 @@ public class Sale {
 	public int roundedTotal=0;
 
 	public Sale(Ticket t1) {
-		this.ticket = t1;
-		Date entryTime = this.ticket.getEntryTime();
-		Date exitTime = this.ticket.getGarage().getDateTime();
-		double parkingRate = this.ticket.getGarage().getParkingRate();		
-		this.total = calculateTotal(entryTime, exitTime, parkingRate);
-		this.roundedTotal = (int)(Math.floor(total) +1);
+		if (t1.isValid()) {
+			this.ticket = t1;
+			Date entryTime = this.ticket.getEntryTime();
+			Date exitTime = this.ticket.getGarage().getDateTime();
+			double parkingRate = this.ticket.getGarage().getParkingRate();		
+			this.total = calculateTotal(entryTime, exitTime, parkingRate);
+			this.roundedTotal = (int)(Math.floor(total) +1);
+		}
+//		} else {
+//			this.total = 0.0;
+//			this.roundedTotal = 0;
+//		}
+	}
+
+	public void setTotal(double total) {
+		this.total = total;
 	}
 
 	public double getTotal() {		

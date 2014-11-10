@@ -1,7 +1,8 @@
 package cs414.a4.gcharl;
 
+import java.text.NumberFormat;
 import java.util.Date;
-import java.math.*;
+//import java.math.*;
 
 public class Sale {
 	
@@ -9,16 +10,21 @@ public class Sale {
 	
 
 	private double total;
+	private Date entryTime;
+	private Date exitTime;
+	private double parkingRate = 0.0;
+	private double amtPaid = 0.0;
 	public int roundedTotal=0;
 
 	public Sale(Ticket t1) {
 		if (t1.isValid()) {
 			this.ticket = t1;
-			Date entryTime = this.ticket.getEntryTime();
-			Date exitTime = this.ticket.getGarage().getDateTime();
-			double parkingRate = this.ticket.getGarage().getParkingRate();		
-			this.total = calculateTotal(entryTime, exitTime, parkingRate);
-			this.roundedTotal = (int)(Math.floor(total) +1);
+			this.entryTime = this.ticket.getEntryTime();
+			this.exitTime = this.ticket.getGarage().getDateTime();
+			this.parkingRate = this.ticket.getGarage().getParkingRate();
+			calculateTotal();
+			//this.total = calculateTotal(entryTime, exitTime, parkingRate);
+			//this.roundedTotal = (int)(Math.floor(total) +1);
 		}
 //		} else {
 //			this.total = 0.0;
@@ -27,16 +33,32 @@ public class Sale {
 	}
 
 	public void setTotal(double total) {
+		//NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance();
+		//this.total = currencyFormatter.format(total);
 		this.total = total;
+	}
+
+	public void setAmtPaid(double amtPaid) {
+		this.amtPaid = amtPaid;
 	}
 
 	public double getTotal() {		
 		return this.total;
 	}
 
+	public void calculateTotal() {
+		this.total = calculateTotal(this.entryTime, this.exitTime, this.parkingRate);
+	}
+	
 	private double calculateTotal(Date entryTime, Date exitTime, double parkingRate) {
 		double timeParked = exitTime.getTime() - entryTime.getTime();
-		double subtotal = (timeParked/3600000)*parkingRate;
+		double subtotal = (timeParked/3600000)*parkingRate - this.amtPaid;
+		if (this.ticket.isValid()) {
+			this.roundedTotal = (int)(Math.floor(subtotal) +1);
+		} else {
+			this.roundedTotal = 0;
+		}
+		
 		return subtotal;
 	}
 

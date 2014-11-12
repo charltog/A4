@@ -42,7 +42,7 @@ public class ParkingGarageGUI extends JFrame {
 	
 	private Garage garage = new Garage(101);
 	private int totalAmt = 0;
-	private double payAmt;
+	private double payAmt = 0.0;
 	private JTextField paymentAmount;
 	private GridBagConstraints gbc_paymentAmount;
 	private JTextField exitInformation;
@@ -142,6 +142,7 @@ public class ParkingGarageGUI extends JFrame {
 				
 		btnGetTicket.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				exitInformation.setText("");
 				Ticket t1 = garage.getEntryGate().requestTicket();
 				if (t1 != null) {
 					assignedTicketNumber.setText(t1.toString());
@@ -159,6 +160,7 @@ public class ParkingGarageGUI extends JFrame {
 		
 		btnEnterGarage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				exitInformation.setText("");
 				entryGatePane.setText("Closed");		
 				assignedTicketNumber.setText("");
 				garage.getEntryGate().enterGarage();
@@ -371,8 +373,6 @@ public class ParkingGarageGUI extends JFrame {
 					payAmt = Double.parseDouble(paymentAmount.getText());
 				} 
 				catch(NumberFormatException e1) {
-					SystemLogEvent event = new SystemLogEvent(garage, e1.getMessage(), this.getClass().getName(), garage.getDateTime());
-					garage.systemLog.addLogEvent(event);
 					exitInformation.setText("Invalid payment amount");
 					paymentAmount.setText("");
 				}
@@ -381,6 +381,12 @@ public class ParkingGarageGUI extends JFrame {
 				if (garage.getExitGate().makePayment(s1, payAmt, FOP)) {
 					totalText.setText("");
 					paymentAmount.setText("");
+					rdbtnCash.setSelected(false);
+					rdbtnCreditCard.setSelected(false);
+					payAmt = 0.0;
+					FOP = null;
+					String s = String.format("$ %.2f", s1.getChange());
+					changeAmount.setText(s);
 				} else {
 					paymentAmount.setText("Payment Failed");
 				}
@@ -434,11 +440,9 @@ public class ParkingGarageGUI extends JFrame {
 				Ticket t1 = garage.getEntryGate().findTicketByID(testString);
 				
 				if (t1 == null) {
-					//exitTicketNum.setText("Invalid Ticket #");
 					exitInformation.setText("Invalid Ticket #");
 					btnExitGarage.setEnabled(false);
 				} else if (t1.isValid()) {
-					//exitTicketNum.setText("Pay Before Exiting Please");
 					exitInformation.setText("Pay before exiting please");
 					btnExitGarage.setEnabled(false);
 				} else {

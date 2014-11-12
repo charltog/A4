@@ -6,7 +6,7 @@ public class GarageDescription {
 	
 
 	private SystemStatus status = SystemStatus.ShutDown;
-	private int maxOccupancy = 200;
+	private int maxOccupancy = 20;
 	private int currentOccupancy = 0;
 	private double hourlyParkingRate = 1.00;
 

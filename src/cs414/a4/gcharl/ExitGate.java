@@ -51,8 +51,15 @@ public class ExitGate {
 //			s1 = createSale(t1);
 //			Sales.add(s1);			
 		} else {
-			s1 = createSale(t1);
-			Sales.add(s1);
+			for (Sale s: Sales) {
+				if (s.getTicket() == t1) {
+					s1 = s;
+				}
+			} 
+			if (s1 == null) {
+				s1 = createSale(t1);
+			}
+			//Sales.add(s1);
 			//Payment p1 = createPayment(s1.getTotal(), FOP);
 			//confirmTotal();
 			//p1.processPayment();
@@ -72,7 +79,9 @@ public class ExitGate {
 	private Sale createSale(Ticket t1) {
 		SystemLogEvent event = new SystemLogEvent(this.garage, "Sale for Ticket " + t1 + " Created", ExitGate.class.getName(), this.garage.getDateTime());
 		this.garage.systemLog.addLogEvent(event);
-		return new Sale(t1);		
+		Sale s1 = new Sale (t1);
+		Sales.add(s1);
+		return s1;		
 	}
 
 	private void confirmTotal() {
@@ -99,7 +108,7 @@ public class ExitGate {
 				if (newTotal <= 0.01) {
 					s1.getTicket().retire();
 					this.openExitGate();
-					s1.setChange(newTotal);
+					s1.setChange(-1*newTotal);
 				}
 				s1.setTotal((double)newTotal);			
 				//s1.calculateTotal();
